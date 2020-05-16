@@ -8,7 +8,7 @@ let config = {
             debug: true
         }
     },
-    scene: [textTest, moveTest, doorScene]
+    scene: [pianoTest, textTest, moveTest, doorScene]
 };
 
 let game = new Phaser.Game(config);

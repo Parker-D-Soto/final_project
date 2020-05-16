@@ -8,9 +8,9 @@ let config = {
             debug: true
         }
     },
-    scene: [pianoTest, textTest, moveTest, doorScene]
+    scene: [gambleTest, pianoTest, textTest, moveTest, doorScene]
 };
 
 let game = new Phaser.Game(config);
 
-let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyW, keyA, keyS, keyD;
+let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyW, keyA, keyS, keyD, checker, gamePlayed;

@@ -4,7 +4,7 @@ class moveTest extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('sq', './assets/testerSquare.png');
+        this.load.image('sq', './assets/testerSquare.png'); //tester image
     }
 
     create(){
@@ -36,6 +36,6 @@ class moveTest extends Phaser.Scene {
         //Collider for player and obstacles
     }
     update(){
-        this.testPlayer.update();
+        this.testPlayer.update(); //update the sprite
     }
 }

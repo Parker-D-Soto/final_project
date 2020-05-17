@@ -6,15 +6,28 @@ class doorScene extends Phaser.Scene {
     preload(){
         this.load.image('door1', './assets/door1.png'); //dimensions: 512 x 576
         this.load.image('door2', './assets/door2.png'); //dimensions: 512 x 576
-        this.load.image('player', './assets/player.png'); //dimensions: 60 x 104
+        this.load.image('saloonTheater', './assets/saloon theater.png'); //dimensions: 1024 x 576
+        
+        //load spritesheets
+        this.load.spritesheet('player', './assets/player.png', {frameWidth: 60, frameHeight: 104, startFrame: 0, endFrame: 13}); //dimensions: 60 x 104
+        this.load.spritesheet('bartender', './assets/bartender.png', {frameWidth: 60, frameHeight: 140}); //dimensions: 60 x 140
+        this.load.spritesheet('gambler', './assets/gambler.png', {frameWidth: 96, frameHeight: 132}); //dimensions: 96 x 132
     }
 
     create(){
         this.input.addPointer(1);
 
+        this.saloonTheater = this.add.image(-512, -100, 'saloonTheater').setOrigin(0,0);
+
+        this.bartender = this.add.sprite(40, 364, 'bartender').setOrigin(0,0);
+
+        this.gambler = this.add.sprite(860, 364, 'gambler').setOrigin(0,0);
+
         this.door1 = this.add.image(0, 0, 'door1').setOrigin(0,0).setInteractive({ draggable: true });
 
         this.door2 = this.add.image(game.config.width / 2, 0, 'door2').setOrigin(0,0).setInteractive({ draggable: true });
+
+        this.player = this.add.sprite(game.config.width / 3, 400, 'player').setOrigin(0,0);
 
         this.door1.on('drag', function (pointer, dragX, dragY) {
 

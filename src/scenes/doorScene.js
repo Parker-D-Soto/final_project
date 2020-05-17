@@ -6,6 +6,7 @@ class doorScene extends Phaser.Scene {
     preload(){
         this.load.image('door1', './assets/door1.png'); //dimensions: 512 x 576
         this.load.image('door2', './assets/door2.png'); //dimensions: 512 x 576
+        this.load.image('player', './assets/player.png'); //dimensions: 60 x 104
     }
 
     create(){

@@ -1,1 +1,2 @@
 N. Reiter: Hmm, I wonder what it means to press a to ask… maybe you should press a on the keyboard.
+N. Reiter: If you still can't move: To move press all 4 keys at once: w, s, a and d; then press the arrow keys to move around

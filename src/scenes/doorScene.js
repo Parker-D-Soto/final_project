@@ -15,6 +15,7 @@ class doorScene extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 60, frameHeight: 104, startFrame: 0, endFrame: 13}); //dimensions: 60 x 104
         this.load.spritesheet('bartender', './assets/bartender.png', {frameWidth: 60, frameHeight: 140}); //dimensions: 60 x 140
         this.load.spritesheet('gambler', './assets/gambler.png', {frameWidth: 96, frameHeight: 132}); //dimensions: 96 x 132
+        this.load.spritesheet('box', './assets/testersquare.png', {frameWidth: 300, frameHeight: 300}); //dimensions: 96 x 132
 
         this.load.text('barChat', 'assets/text/Bartender(chat).txt');
         this.load.text('barNar3', 'assets/text/Bartender(narrator_prog_3).txt');
@@ -95,6 +96,20 @@ class doorScene extends Phaser.Scene {
         this.gambler = this.physics.add.sprite(860, 364, 'gambler').setOrigin(0,0).setInteractive();
         this.gambler.body.immovable = true;
 
+        //furniture
+        this.bar = this.physics.add.sprite(120, 270, 'bartender').setOrigin(0,0);
+        this.bar.body.immovable = true;
+        this.bar.setAlpha(0)
+        this.bar.setScale(2)
+        this.table = this.physics.add.sprite(750, 380, 'box').setOrigin(0,0);
+        this.table.body.immovable = true;
+        this.table.setAlpha(0)
+        this.table.setScale(2)
+        this.wall = this.physics.add.sprite(0, -750, 'box').setOrigin(0,0);
+        this.wall.body.immovable = true;
+        this.wall.setAlpha(0)
+        this.wall.setScale(16)
+
         //doors
         this.door1 = this.add.image(0, 0, 'door1').setOrigin(0,0).setInteractive({ draggable: true });
         this.door2 = this.add.image(game.config.width / 2, 0, 'door2').setOrigin(0,0).setInteractive({ draggable: true });
@@ -142,6 +157,9 @@ class doorScene extends Phaser.Scene {
 
         this.physics.add.collider(this.player, this.bartender);
         this.physics.add.collider(this.player, this.gambler); 
+        this.physics.add.collider(this.player, this.bar);
+        this.physics.add.collider(this.player, this.table);
+        this.physics.add.collider(this.player, this.wall); 
 
         //Door interactions
         this.door1.on('drag', function (pointer, dragX, dragY) {

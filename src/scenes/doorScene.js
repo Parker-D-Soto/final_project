@@ -45,6 +45,7 @@ class doorScene extends Phaser.Scene {
         this.load.audio('dSound', "./assets/sfx/d.wav");
         this.load.audio('eSound', "./assets/sfx/e.wav");
         this.load.audio('fSound', "./assets/sfx/f.wav");
+        this.load.audio('music', "./assets/sfx/bar_music.wav")
     }
 
     create(){
@@ -65,6 +66,10 @@ class doorScene extends Phaser.Scene {
 
         //background
         this.saloonTheater = this.add.image(-512, -100, 'saloonTheater').setOrigin(0,0); 
+
+        //load music
+        this.music = this.sound.add('music')
+        this.music.setLoop(true);
 
         //piano keys
         this.keyC = this.add.image(528, 264, 'key2').setOrigin(0,0).setInteractive();;
@@ -269,6 +274,7 @@ class doorScene extends Phaser.Scene {
 
         if(this.door1.x < 0 && help_prog < 2) {
             help_prog = 2;
+            this.music.play();
         } // triggers progress through the story
 
         if(bartender_prog == 2 && gambler_prog == 2 && help_prog < 4) {

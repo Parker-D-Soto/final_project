@@ -9,6 +9,8 @@ class doorScene extends Phaser.Scene {
         this.load.image('saloonTheater', './assets/saloon theater.png'); //dimensions: 1024 x 576
         this.load.image('key1', './assets/key1.png');
         this.load.image('key2', './assets/key2.png');
+        this.load.image('odd', './assets/dieODD.png');
+        this.load.image('even', './assets/dieEVEN.png');
         this.load.image('sq', './assets/testerSquare.png');
 
         //load spritesheets
@@ -154,8 +156,8 @@ class doorScene extends Phaser.Scene {
         //the actual text object
 
         //For Gambling Game
-        this.oddButton = this.add.image(2000, 400, 'sq').setOrigin(0.5, 0.5).setInteractive();
-        this.evenButton = this.add.image(2000, 500, 'sq').setOrigin(0.5, 0.5).setInteractive();
+        this.oddButton = this.add.image(2000, 400, 'odd').setOrigin(0.5, 0.5).setInteractive();
+        this.evenButton = this.add.image(2000, 500, 'even').setOrigin(0.5, 0.5).setInteractive();
         checker = false;
         gamePlayed = false;
         amount = 0;

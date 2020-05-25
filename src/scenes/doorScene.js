@@ -17,6 +17,7 @@ class doorScene extends Phaser.Scene {
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 60, frameHeight: 104, startFrame: 0, endFrame: 13}); //dimensions: 60 x 104
         this.load.spritesheet('bartender', './assets/bartender.png', {frameWidth: 60, frameHeight: 140}); //dimensions: 60 x 140
         this.load.spritesheet('gambler', './assets/gambler.png', {frameWidth: 96, frameHeight: 132}); //dimensions: 96 x 132
+        this.load.spritesheet('help', './assets/narrator.png', {frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('box', './assets/testersquare.png', {frameWidth: 300, frameHeight: 300}); //dimensions: 96 x 132
 
         this.load.text('barChat', 'assets/text/Bartender(chat).txt');
@@ -188,7 +189,7 @@ class doorScene extends Phaser.Scene {
         //removes text box when screen is clicked
 
         //helper button
-        this.hButt = this.add.image(50, 50, 'sq').setOrigin(0, 0).setInteractive();
+        this.hButt = this.add.sprite(50, 50, 'help').setOrigin(0, 0).setInteractive();
 
         this.hButt.on('pointerdown', () => this.askHelp(this.diaText, this.diBox) );
         //Press the helper button to trigger dialogue

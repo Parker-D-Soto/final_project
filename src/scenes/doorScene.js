@@ -21,7 +21,7 @@ class doorScene extends Phaser.Scene {
         this.load.spritesheet('bartender', './assets/bartender.png', {frameWidth: 60, frameHeight: 140}); //dimensions: 60 x 140
         this.load.spritesheet('gambler', './assets/gambler.png', {frameWidth: 96, frameHeight: 132}); //dimensions: 96 x 132
         this.load.spritesheet('help', './assets/narrator.png', {frameWidth: 64, frameHeight: 64});
-        this.load.spritesheet('box', './assets/testersquare.png', {frameWidth: 300, frameHeight: 300}); //dimensions: 96 x 132
+        this.load.spritesheet('box', './assets/testerSquare.png', {frameWidth: 300, frameHeight: 300}); //dimensions: 96 x 132
 
         this.load.text('barChat', 'assets/text/Bartender(chat).txt');
         this.load.text('barNar3', 'assets/text/Bartender(narrator_prog_3).txt');

@@ -163,10 +163,11 @@ class doorScene extends Phaser.Scene {
         gamePlayed = false;
         amount = 0;
 
+        //Colliders
         this.physics.add.collider(this.player, this.bartender);
         this.physics.add.collider(this.player, this.gambler); 
-        this.physics.add.collider(this.player, this.bar);
-        this.physics.add.collider(this.player, this.table);
+        this.physics.add.collider(this.player, this.bar, this.updateBar);
+        this.physics.add.collider(this.player, this.table, this.updateGambler);
         this.physics.add.collider(this.player, this.wall); 
 
         //Door interactions
@@ -194,41 +195,25 @@ class doorScene extends Phaser.Scene {
         this.hButt.on('pointerdown', () => this.askHelp(this.diaText, this.diBox) );
         //Press the helper button to trigger dialogue
 
-        this.gambler.on('pointerdown', () => this.askGambler(this.diaText, this.diBox, this.oddButton, this.evenButton) );
-        //Press the gambler to trigger dialogue and/or game
 
         this.oddButton.on('pointerdown', () => this.checkOdd(this.evenButton, this.oddButton) );
         this.evenButton.on('pointerdown', () => this.checkEven(this.oddButton, this.evenButton) );
         //for gambling game
     }
     update(){
+        if (this.player.x > this.bar.x + this.bar.width + 110) {
+            barChat = false;
+        }
+        if (this.player.x < this.tablex - 40) {
+            gamblerChat = false;
+        }
+
         if(!diaBoo && !gambleGame) {
             this.door1.x = game.config.width / 2 - this.door2.x;
             this.door2.x = game.config.width / 2 - this.door1.x;
             this.player.update();
             //updates the door movements, and player movements
 
-            if(fight_prog == 1) {
-                fight_prog = 0;
-                diaBoo = true;
-                dialogue = this.cache.text.get('fightD0').split("\n").reverse();
-                this.diaText.text = dialogue.pop();
-                this.diBox.setAlpha(0.5);
-            }
-            if(fight_prog == 2) {
-                fight_prog = 0;
-                diaBoo = true;
-                dialogue = this.cache.text.get('fightD1').split("\n").reverse();
-                this.diaText.text = dialogue.pop();
-                this.diBox.setAlpha(0.5);
-            }
-            if(gamblerPhrase) {
-                diaBoo = true;
-                dialogue = this.cache.text.get('gambChat').split("\n").reverse();
-                this.diaText.text = dialogue.pop();
-                this.diBox.setAlpha(0.5);
-                gamblerPhrase = false;
-            }
         } else if(gambleGame) {
             if(gamePlayed) { //checks first to see if the game's completed
                 if(checker) {
@@ -271,7 +256,6 @@ class doorScene extends Phaser.Scene {
                 if(gambler_prog < 2) {
                     gambler_prog = 2;
                 }
-                gamblerPhrase = true;
             }
         }
 
@@ -347,43 +331,24 @@ class doorScene extends Phaser.Scene {
             if(help_prog < 3) {
                 help_prog = 3;
             }
-            if(sound == this.keyASound) {
+            if(sound == this.keyASound && barChat) {
+                pressedDia = true;
+                diaBoo = true;
+                dialogue = this.cache.text.get('barNar3').split("\n").reverse();
+                diaText.text = dialogue.pop();
+                diBox.setAlpha(0.5);
                 if(bartender_prog < 1) {
-                    pressedDia = true;
-                    diaBoo = true;
-                    dialogue = this.cache.text.get('barNar3').split("\n").reverse();
-                    diaText.text = dialogue.pop();
-                    diBox.setAlpha(0.5);
-                    bartender_prog = 1
-                    if(fight_prog < 1) {
-                        fight_prog = 1;
-                    }
-                } else if (money > 300) {
+                    bartender_prog = 1;
+                }
+            } else if (sound == this.keyBSound && barChat) {
+                if (money > 300) {
                     pressedDia = true;
                     diaBoo = true;
                     dialogue = this.cache.text.get('buyMt300').split("\n").reverse();
                     diaText.text = dialogue.pop();
                     diBox.setAlpha(0.5);
-                } else if (drink == 2) {
-                    if(bartender_prog < 1) {
-                        pressedDia = true;
-                        diaBoo = true;
-                        dialogue = this.cache.text.get('barChat').split("\n").reverse();
-                        diaText.text = dialogue.pop();
-                        diBox.setAlpha(0.5);
-                        bartender_prog = 1
-                        if(fight_prog < 2) {
-                            fight_prog = 2;
-                        }
-                    }
-                } else if (bartender_prog == 1){
-                    pressedDia = true;
-                    diaBoo = true;
-                    dialogue = this.cache.text.get('barChat').split("\n").reverse();
-                    diaText.text = dialogue.pop();
-                    diBox.setAlpha(0.5);
-                    if(bartender_prog == 1) {
-                        bartender_prog = 2;
+                    if (drink < 2) {
+                        drink = 2;
                     }
                 } else if (money < 10) {
                     pressedDia = true;
@@ -402,36 +367,51 @@ class doorScene extends Phaser.Scene {
                         drink = 1;
                     }
                 }
-            }
-        }
-    }
-    //Plays piano sounds
-
-    askGambler(diaText, diBox, oddButton, evenButton) {
-        if(!diaBoo && !gambleGame) {
-            if(gambler_prog == 0) {
+            } else if (sound == this.keyCSound && barChat) {
                 pressedDia = true;
                 diaBoo = true;
-                dialogue = this.cache.text.get('gambNar3').split("\n").reverse();
+                dialogue = this.cache.text.get('barChat').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
-                gambler_prog = 1;
-            } else if (drink == 1) {
-                pressedDia = true;
-                diaBoo = true;
-                dialogue = this.cache.text.get('gambNar3D1').split("\n").reverse();
-                diaText.text = dialogue.pop();
-                diBox.setAlpha(0.5);
-                drink = 2;
-                help_prog = 5;
-            } else if (help_prog == 5 && gambler_prog == 2) {
-                pressedDia = true;
-                diaBoo = true;
-                dialogue = this.cache.text.get('gambNar5').split("\n").reverse();
-                diaText.text = dialogue.pop();
-                diBox.setAlpha(0.5);
-                gambler_prog = 3;
-            } else if(gambler_prog >= 1) {
+                if(bartender_prog < 2) {
+                    bartender_prog = 2;
+                }
+            } else if (sound == this.keyFSound && barChat) {
+                if (drink == 0) {
+                    pressedDia = true;
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('fightD0').split("\n").reverse();
+                    this.diaText.text = dialogue.pop();
+                    this.diBox.setAlpha(0.5);
+                } else if (drink == 1) {
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('fightD1').split("\n").reverse();
+                    this.diaText.text = dialogue.pop();
+                    this.diBox.setAlpha(0.5);
+                } 
+            } else if (sound == this.keyASound && gamblerChat) {
+                if (drink == 1) {
+                    pressedDia = true;
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('gambNar3D1').split("\n").reverse();
+                    diaText.text = dialogue.pop();
+                    diBox.setAlpha(0.5);
+                    help_prog = 5;
+                } else if (help_prog == 5) {
+                    pressedDia = true;
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('gambNar5').split("\n").reverse();
+                    diaText.text = dialogue.pop();
+                    diBox.setAlpha(0.5);
+                } else {
+                    pressedDia = true;
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('gambNar3').split("\n").reverse();
+                    diaText.text = dialogue.pop();
+                    diBox.setAlpha(0.5);
+                    gambler_prog = 1;
+                }
+            } else if (sound == this.keyBSound && gamblerChat) {
                 if(bartender_prog < 1) {
                     bartender_prog = 1;
                 }
@@ -450,11 +430,18 @@ class doorScene extends Phaser.Scene {
                 //this algorithm simulates 2 6 sided dice, looks weird but please don't touch
                 console.log(amount);
                 //logs the amount
-                oddButton.x = 512; 
-                evenButton.x = 512;
-            }  
+                this.oddButton.x = 512; 
+                this.evenButton.x = 512;
+            } else if (sound == this.keyCSound && gamblerChat) {
+                pressedDia = true;
+                diaBoo = true;
+                dialogue = this.cache.text.get('gambChat').split("\n").reverse();
+                this.diaText.text = dialogue.pop();
+                this.diBox.setAlpha(0.5);
+            }
         }
     }
+    //Plays piano sounds
 
     checkEven(oddButton, evenButton) {
         //player guessed even and this sees if their right
@@ -484,6 +471,16 @@ class doorScene extends Phaser.Scene {
         gamePlayed = true;
         oddButton.x = 2000;
         evenButton.x = 2000;
+    }
+
+    updateBar() {
+        barChat = true;
+        gamblerChat = false
+    }
+
+    updateGambler() {
+        gamblerChat = true;
+        barChat = false;
     }
 
 }

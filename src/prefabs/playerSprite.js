@@ -22,9 +22,23 @@ class playerSprite extends Phaser.Physics.Arcade.Sprite {
                 if(help_prog < 1) {
                     help_prog = 1;
                 }
+            } else if (keyUP.isDown) {
+                this.setVelocityY(-80);
+                if(help_prog < 1) {
+                    help_prog = 1;
+                }
+            } else if (keyDOWN.isDown) {
+                this.setVelocityY(80);
+                if(help_prog < 1) {
+                    help_prog = 1;
+                }
+            } else {
+                this.setVelocityX(0);
+                this.setVelocityY(0);
             }
         } else {
             this.setVelocityX(0); //this is to make it stop when not receiving input
+            this.setVelocityY(0);
         }
     }
 }

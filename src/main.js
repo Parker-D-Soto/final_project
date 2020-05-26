@@ -46,5 +46,9 @@ let money = 0;
 //Sees when gamble game starts
 let gambleGame = false;
 
+//chatting triggers
+let gamblerChat = false;
+let barChat = false;
+
 //testing
 let checker, gamePlayed;

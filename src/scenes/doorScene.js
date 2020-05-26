@@ -12,6 +12,9 @@ class doorScene extends Phaser.Scene {
         this.load.image('odd', './assets/dieODD.png');
         this.load.image('even', './assets/dieEVEN.png');
         this.load.image('sq', './assets/testerSquare.png');
+        this.load.image('bar_choice', './assets/bartender_choices.png')
+        this.load.image('gamble_choice', './assets/gambler_choices.png')
+        this.load.image('door_choice', './assets/door_choices.png')
 
         //load spritesheets
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 60, frameHeight: 104, startFrame: 0, endFrame: 13}); //dimensions: 60 x 104
@@ -69,6 +72,13 @@ class doorScene extends Phaser.Scene {
 
         //background
         this.saloonTheater = this.add.image(-512, -100, 'saloonTheater').setOrigin(0,0); 
+        
+        //key prompts
+        this.bar_choice = this.add.image(50, 230, 'bar_choice').setOrigin(0,0).setScale(.1,.1)
+        this.bar_choice.setAlpha(0)
+        this.gamble_choice = this.add.image(890, 260, 'gamble_choice').setOrigin(0,0).setScale(.1,.1)
+        this.gamble_choice.setAlpha(0)
+        this.door_choice = this.add.image(790, 60, 'door_choice').setOrigin(0,0).setScale(.1,.1)
 
         //load music
         this.music = this.sound.add('music')
@@ -199,13 +209,22 @@ class doorScene extends Phaser.Scene {
         this.oddButton.on('pointerdown', () => this.checkOdd(this.evenButton, this.oddButton) );
         this.evenButton.on('pointerdown', () => this.checkEven(this.oddButton, this.evenButton) );
         //for gambling game
+
     }
     update(){
         if (this.player.x > this.bar.x + this.bar.width + 110) {
             barChat = false;
+            this.bar_choice.setAlpha(0)
+        }else{
+            this.bar_choice.setAlpha(1)
+            barChat = true;
         }
         if (this.player.x < this.table.x - 40) {
             gamblerChat = false;
+            this.gamble_choice.setAlpha(0)
+        }else{
+            this.gamble_choice.setAlpha(1)
+            gamblerChat = true;
         }
 
         if(!diaBoo && !gambleGame) {
@@ -475,7 +494,7 @@ class doorScene extends Phaser.Scene {
 
     updateBar() {
         barChat = true;
-        gamblerChat = false
+        gamblerChat = false;
     }
 
     updateGambler() {

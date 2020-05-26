@@ -204,7 +204,7 @@ class doorScene extends Phaser.Scene {
         if (this.player.x > this.bar.x + this.bar.width + 110) {
             barChat = false;
         }
-        if (this.player.x < this.tablex - 40) {
+        if (this.player.x < this.table.x - 40) {
             gamblerChat = false;
         }
 

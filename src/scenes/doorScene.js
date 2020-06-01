@@ -331,7 +331,7 @@ class doorScene extends Phaser.Scene {
             if(this.fArray.length != 0 && !this.settingFire) {
                 this.settingFire = true;
                 this.clock = this.time.delayedCall(1000, () => {
-                    let fire = fArray.pop();
+                    let fire = this.fArray.pop();
                     fire.setAlpha(1);
                     this.settingFire = false;
                 }, null, this);
@@ -343,7 +343,7 @@ class doorScene extends Phaser.Scene {
                     y: { from: -100, to: 0},
                     scale: { from: 1, to: 0.5},
                     ease: 'Linear',       
-                    duration: 1000,
+                    duration: 8000,
                     repeat: 0,            
                     delay: 1000
                 }); 
@@ -353,7 +353,7 @@ class doorScene extends Phaser.Scene {
                     x: this.player.x / 2 + 256,
                     y: this.player.y / 2 + 50,
                     ease: 'Linear',       
-                    duration: 1000,
+                    duration: 8000,
                     repeat: 0,            
                     delay: 1000
                 });
@@ -363,7 +363,7 @@ class doorScene extends Phaser.Scene {
                     x: this.gambler.x / 2 + 256,
                     y: this.gambler.y / 2 + 50,
                     ease: 'Linear',       
-                    duration: 1000,
+                    duration: 8000,
                     repeat: 0,            
                     delay: 1000
                 });
@@ -373,7 +373,7 @@ class doorScene extends Phaser.Scene {
                     x: this.bartender.x / 2 + 256,
                     y: this.bartender.y / 2 + 50,
                     ease: 'Linear',       
-                    duration: 1000,
+                    duration: 8000,
                     repeat: 0,            
                     delay: 1000
                 });
@@ -383,7 +383,7 @@ class doorScene extends Phaser.Scene {
                     x: this.f1.x / 2 + 256,
                     y: this.f1.y / 2 + 50,
                     ease: 'Linear',       
-                    duration: 1000,
+                    duration: 8000,
                     repeat: 0,            
                     delay: 1000
                 });
@@ -393,7 +393,7 @@ class doorScene extends Phaser.Scene {
                     x: this.f2.x / 2 + 256,
                     y: this.f2.y / 2 + 50,
                     ease: 'Linear',       
-                    duration: 1000,
+                    duration: 8000,
                     repeat: 0,            
                     delay: 1000
                 });
@@ -403,7 +403,7 @@ class doorScene extends Phaser.Scene {
                     x: this.f3.x / 2 + 256,
                     y: this.f3.y / 2 + 50,
                     ease: 'Linear',       
-                    duration: 1000,
+                    duration: 8000,
                     repeat: 0,            
                     delay: 1000
                 });
@@ -413,7 +413,7 @@ class doorScene extends Phaser.Scene {
                     x: this.f4.x / 2 + 256,
                     y: this.f4.y / 2 + 50,
                     ease: 'Linear',       
-                    duration: 1000,
+                    duration: 8000,
                     repeat: 0,            
                     delay: 1000
                 });
@@ -423,7 +423,7 @@ class doorScene extends Phaser.Scene {
                     x: this.f5.x / 2 + 256,
                     y: this.f5.y / 2 + 50,
                     ease: 'Linear',       
-                    duration: 1000,
+                    duration: 8000,
                     repeat: 0,            
                     delay: 1000
                 });
@@ -433,7 +433,67 @@ class doorScene extends Phaser.Scene {
                     x: this.f6.x / 2 + 256,
                     y: this.f6.y / 2 + 50,
                     ease: 'Linear',       
-                    duration: 1000,
+                    duration: 8000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.keyC],
+                    scale: { from: 1, to: 0.5},
+                    x: this.keyC.x / 2 + 256,
+                    y: this.keyC.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 8000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.keyD],
+                    scale: { from: 1, to: 0.5},
+                    x: this.keyD.x / 2 + 256,
+                    y: this.keyD.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 8000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.keyE],
+                    scale: { from: 1, to: 0.5},
+                    x: this.keyE.x / 2 + 256,
+                    y: this.keyE.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 8000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.keyF],
+                    scale: { from: 1, to: 0.5},
+                    x: this.keyF.x / 2 + 256,
+                    y: this.keyF.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 8000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.keyA],
+                    scale: { from: 1, to: 0.5},
+                    x: this.keyA.x / 2 + 256,
+                    y: this.keyA.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 8000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.keyC],
+                    scale: { from: 1, to: 0.5},
+                    x: this.keyB.x / 2 + 256,
+                    y: this.keyB.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 8000,
                     repeat: 0,            
                     delay: 1000
                 });
@@ -524,7 +584,7 @@ class doorScene extends Phaser.Scene {
                     bartender_prog = 1;
                 }
             } else if (sound == this.keyBSound && barChat) {
-                if (money > 300) {
+                if (money > 300 && drink >= 2) {
                     pressedDia = true;
                     diaBoo = true;
                     dialogue = this.cache.text.get('buyMt300').split("\n").reverse();
@@ -586,7 +646,7 @@ class doorScene extends Phaser.Scene {
                 }  else if (drink == 4) {
                     //Trigger end game\
                     endScene1 = true;
-                    help.setAlpha(0);
+                    this.hButt.setAlpha(0);
                 }
             } else if (sound == this.keyASound && gamblerChat) {
                 if (drink == 1) {

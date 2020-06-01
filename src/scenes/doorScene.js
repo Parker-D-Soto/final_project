@@ -200,7 +200,7 @@ class doorScene extends Phaser.Scene {
         //removes text box when screen is clicked
 
         //helper button
-        this.hButt = this.add.sprite(50, 50, 'help').setOrigin(0, 0).setInteractive();
+        this.hButt = this.add.sprite(25, 25, 'help').setOrigin(0, 0).setInteractive();
 
         this.hButt.on('pointerdown', () => this.askHelp(this.diaText, this.diBox) );
         //Press the helper button to trigger dialogue

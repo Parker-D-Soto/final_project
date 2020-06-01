@@ -50,5 +50,8 @@ let gambleGame = false;
 let gamblerChat = false;
 let barChat = false;
 
+//Ending Scene
+endScene1 = false;
+
 //testing
 let checker, gamePlayed;

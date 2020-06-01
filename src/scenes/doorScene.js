@@ -12,9 +12,14 @@ class doorScene extends Phaser.Scene {
         this.load.image('odd', './assets/dieODD.png');
         this.load.image('even', './assets/dieEVEN.png');
         this.load.image('sq', './assets/testerSquare.png');
-        this.load.image('bar_choice', './assets/bartender_choices.png')
-        this.load.image('gamble_choice', './assets/gambler_choices.png')
-        this.load.image('door_choice', './assets/door_choices.png')
+        this.load.image('bar_choice', './assets/bartender_choices.png');
+        this.load.image('gamble_choice', './assets/gambler_choices.png');
+        this.load.image('door_choice', './assets/door_choices.png');
+        this.load.image('gIcon', './assets/gambler_head.png');
+        this.load.image('bIcon',  './assets/bartender head.png');
+
+        //Firesprites
+        this.load.image('fire',  './assets/fire.png');
 
         //load spritesheets
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 60, frameHeight: 104, startFrame: 0, endFrame: 13}); //dimensions: 60 x 104
@@ -44,6 +49,7 @@ class doorScene extends Phaser.Scene {
         this.load.text('Nar2', 'assets/text/Narrator(narrator_prog_2).txt');
         this.load.text('Nar3G1B1', 'assets/text/Narrator(narrator_prog_3_gambler_prog_1_bartender_prog_1).txt');
         this.load.text('Nar3', 'assets/text/Narrator(narrator_prog_3).txt');
+        this.load.text('Nar4', 'assets/text/Narrator(narrator_prog_4).txt')
 
         this.load.audio('aSound', "./assets/sfx/a.wav");
         this.load.audio('bSound', "./assets/sfx/b.wav");
@@ -128,6 +134,25 @@ class doorScene extends Phaser.Scene {
         this.wall.setAlpha(0)
         this.wall.setScale(16)
 
+        //Fire Images
+        this.f1 = this.add.image(120, 270, 'fire').setOrigin(0, 0);
+        this.f2 = this.add.image(120, 370, 'fire').setOrigin(0, 0);
+        this.f3 = this.add.image(120, 470, 'fire').setOrigin(0, 0);
+        this.f4 = this.add.image(120, 120, 'fire').setOrigin(0, 0);
+        this.f5 = this.add.image(435, 120, 'fire').setOrigin(0, 0);
+        this.f6 = this.add.image(750, 120, 'fire').setOrigin(0, 0);
+
+        this.f1.setAlpha(0);
+        this.f2.setAlpha(0);
+        this.f3.setAlpha(0);
+        this.f4.setAlpha(0);
+        this.f5.setAlpha(0);
+        this.f6.setAlpha(0);
+
+        this.fArray = [this.f1, this.f2, this.f3, this.f4, this.f5, this.f6];
+
+        this.settingFire = false;
+
         //doors
         this.door1 = this.add.image(0, 0, 'door1').setOrigin(0,0).setInteractive({ draggable: true });
         this.door2 = this.add.image(game.config.width / 2, 0, 'door2').setOrigin(0,0).setInteractive({ draggable: true });
@@ -202,6 +227,12 @@ class doorScene extends Phaser.Scene {
         //helper button
         this.hButt = this.add.sprite(50, 50, 'help').setOrigin(0, 0).setInteractive();
 
+        this.gIcon = this.add.sprite(50, 50, 'gIcon').setOrigin(0, 0);
+        this.bIcon = this.add.sprite(50, 50, 'bIcon').setOrigin(0, 0);
+
+        this.gIcon.setAlpha(0);
+        this.bIcon.setAlpha(0);
+
         this.hButt.on('pointerdown', () => this.askHelp(this.diaText, this.diBox) );
         //Press the helper button to trigger dialogue
 
@@ -209,6 +240,9 @@ class doorScene extends Phaser.Scene {
         this.oddButton.on('pointerdown', () => this.checkOdd(this.evenButton, this.oddButton) );
         this.evenButton.on('pointerdown', () => this.checkEven(this.oddButton, this.evenButton) );
         //for gambling game
+
+        //tween boo
+        this.tweened = false;
 
     }
     update(){
@@ -227,13 +261,13 @@ class doorScene extends Phaser.Scene {
             gamblerChat = true;
         }
 
-        if(!diaBoo && !gambleGame) {
+        if(!diaBoo && !gambleGame && !endScene1) {
             this.door1.x = game.config.width / 2 - this.door2.x;
             this.door2.x = game.config.width / 2 - this.door1.x;
             this.player.update();
             //updates the door movements, and player movements
 
-        } else if(gambleGame) {
+        } else if(gambleGame && !endScene1) {
             if(gamePlayed) { //checks first to see if the game's completed
                 if(checker) {
                     if(winStreek <= 5) {
@@ -245,6 +279,8 @@ class doorScene extends Phaser.Scene {
                         }
                         this.diaText.text = dialogue.pop();
                         this.diBox.setAlpha(0.5);
+                        this.hButt.setAlpha(0);
+                        this.gIcon.setAlpha(1);
                         money += 1;
                         winStreek += 1;
                     } else {
@@ -252,6 +288,8 @@ class doorScene extends Phaser.Scene {
                         dialogue = this.cache.text.get('gamPlayW').split("\n").reverse();
                         this.diaText.text = dialogue.pop();
                         this.diBox.setAlpha(0.5);
+                        this.hButt.setAlpha(0);
+                        this.gIcon.setAlpha(1);
                         money += 100;
                         winStreek += 1;
                     }
@@ -260,6 +298,8 @@ class doorScene extends Phaser.Scene {
                     dialogue = this.cache.text.get('gamPlayL').split("\n").reverse();
                     this.diaText.text = dialogue.pop();
                     this.diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.gIcon.setAlpha(1);
                     if(winStreek > 5) {
                         money -= 99;
                     }
@@ -278,7 +318,7 @@ class doorScene extends Phaser.Scene {
             }
         }
 
-        if(this.door1.x < 0 && help_prog < 2) {
+        if(this.door1.x < 0 && help_prog < 2 && !endScene1) {
             help_prog = 2;
             this.music.play();
         } // triggers progress through the story
@@ -286,10 +326,123 @@ class doorScene extends Phaser.Scene {
         if(bartender_prog == 2 && gambler_prog == 2 && help_prog < 4) {
             help_prog = 4;
         }
+
+        if(endScene1) {
+            if(this.fArray.length != 0 && !this.settingFire) {
+                this.settingFire = true;
+                this.clock = this.time.delayedCall(1000, () => {
+                    let fire = fArray.pop();
+                    fire.setAlpha(1);
+                    this.settingFire = false;
+                }, null, this);
+            } else if (this.fArray.length == 0 && !this.tweened) {
+                this.tweened = true;
+                var tween = this.tweens.add({
+                    targets: this.saloonTheater,
+                    x: { from: -512, to: 0 },
+                    y: { from: -100, to: 0},
+                    scale: { from: 1, to: 0.5},
+                    ease: 'Linear',       
+                    duration: 1000,
+                    repeat: 0,            
+                    delay: 1000
+                }); 
+                var tween = this.tweens.add({
+                    targets: [this.player],
+                    scale: { from: 1, to: 0.5},
+                    x: this.player.x / 2 + 256,
+                    y: this.player.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 1000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.gambler],
+                    scale: { from: 1, to: 0.5},
+                    x: this.gambler.x / 2 + 256,
+                    y: this.gambler.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 1000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.bartender],
+                    scale: { from: 1, to: 0.5},
+                    x: this.bartender.x / 2 + 256,
+                    y: this.bartender.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 1000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.f1],
+                    scale: { from: 1, to: 0.5},
+                    x: this.f1.x / 2 + 256,
+                    y: this.f1.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 1000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.f2],
+                    scale: { from: 1, to: 0.5},
+                    x: this.f2.x / 2 + 256,
+                    y: this.f2.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 1000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.f3],
+                    scale: { from: 1, to: 0.5},
+                    x: this.f3.x / 2 + 256,
+                    y: this.f3.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 1000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.f4],
+                    scale: { from: 1, to: 0.5},
+                    x: this.f4.x / 2 + 256,
+                    y: this.f4.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 1000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.f5],
+                    scale: { from: 1, to: 0.5},
+                    x: this.f5.x / 2 + 256,
+                    y: this.f5.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 1000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+                var tween = this.tweens.add({
+                    targets: [this.f6],
+                    scale: { from: 1, to: 0.5},
+                    x: this.f6.x / 2 + 256,
+                    y: this.f6.y / 2 + 50,
+                    ease: 'Linear',       
+                    duration: 1000,
+                    repeat: 0,            
+                    delay: 1000
+                });
+            }
+        }
     }
 
     askHelp(diaText, diBox) {
-        if(!diaBoo && !gambleGame) {
+        if(!diaBoo && !gambleGame && !endScene1) {
             if(help_prog == 0) {
                 pressedDia = true;
                 diaBoo = true;
@@ -320,18 +473,27 @@ class doorScene extends Phaser.Scene {
                 dialogue = this.cache.text.get('Nar3G1B1').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+            } else if (help_prog == 5) {
+                pressedDia = true;
+                diaBoo = true;
+                dialogue = this.cache.text.get('Nar4').split("\n").reverse();
+                diaText.text = dialogue.pop();
+                diBox.setAlpha(0.5);
             }
         } 
     }
     //Function for triggering dialogue via the helper button using progression numbers 
 
     updateDia(diaText, diBox) {
-        if(!gambleGame) {
+        if(!gambleGame && !endScene1) {
             if(pressedDia) {
                 pressedDia = false;
             } else {
                 if(dialogue.length == 0) {
                     diBox.setAlpha(0);
+                    this.hButt.setAlpha(1);
+                    this.gIcon.setAlpha(0);
+                    this.bIcon.setAlpha(0);
                     diaBoo = false;
                     diaText.text = "";
                 } else {
@@ -345,7 +507,7 @@ class doorScene extends Phaser.Scene {
     //When there is dialogue it continues the dialogue
 
     playPiano(sound, diaText, diBox) {
-        if(!diaBoo && !gambleGame) {
+        if(!diaBoo && !gambleGame && !endScene1) {
             sound.play();
             if(help_prog < 3) {
                 help_prog = 3;
@@ -356,6 +518,8 @@ class doorScene extends Phaser.Scene {
                 dialogue = this.cache.text.get('barNar3').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+                this.hButt.setAlpha(0);
+                this.bIcon.setAlpha(1);
                 if(bartender_prog < 1) {
                     bartender_prog = 1;
                 }
@@ -366,8 +530,10 @@ class doorScene extends Phaser.Scene {
                     dialogue = this.cache.text.get('buyMt300').split("\n").reverse();
                     diaText.text = dialogue.pop();
                     diBox.setAlpha(0.5);
-                    if (drink < 2) {
-                        drink = 2;
+                    this.hButt.setAlpha(0);
+                    this.bIcon.setAlpha(1);
+                    if (drink < 3) {
+                        drink = 3;
                     }
                 } else if (money < 10) {
                     pressedDia = true;
@@ -375,12 +541,16 @@ class doorScene extends Phaser.Scene {
                     dialogue = this.cache.text.get('buyMlt10').split("\n").reverse();
                     diaText.text = dialogue.pop();
                     diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.bIcon.setAlpha(1);
                 } else if (money > 10 && money < 300) {
                     pressedDia = true;
                     diaBoo = true;
                     dialogue = this.cache.text.get('buyMt10').split("\n").reverse();
                     diaText.text = dialogue.pop();
                     diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.bIcon.setAlpha(1);
                     money -= 10;
                     if(drink < 1) {
                         drink = 1;
@@ -392,6 +562,8 @@ class doorScene extends Phaser.Scene {
                 dialogue = this.cache.text.get('barChat').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+                this.hButt.setAlpha(0);
+                this.bIcon.setAlpha(1);
                 if(bartender_prog < 2) {
                     bartender_prog = 2;
                 }
@@ -402,12 +574,20 @@ class doorScene extends Phaser.Scene {
                     dialogue = this.cache.text.get('fightD0').split("\n").reverse();
                     this.diaText.text = dialogue.pop();
                     this.diBox.setAlpha(0.5);
-                } else if (drink == 1) {
+                    this.hButt.setAlpha(0);
+                    this.bIcon.setAlpha(1);
+                } else if (drink == 2) {
                     diaBoo = true;
                     dialogue = this.cache.text.get('fightD1').split("\n").reverse();
                     this.diaText.text = dialogue.pop();
                     this.diBox.setAlpha(0.5);
-                } 
+                    this.hButt.setAlpha(0);
+                    this.gIcon.setAlpha(1);
+                }  else if (drink == 4) {
+                    //Trigger end game\
+                    endScene1 = true;
+                    help.setAlpha(0);
+                }
             } else if (sound == this.keyASound && gamblerChat) {
                 if (drink == 1) {
                     pressedDia = true;
@@ -415,19 +595,36 @@ class doorScene extends Phaser.Scene {
                     dialogue = this.cache.text.get('gambNar3D1').split("\n").reverse();
                     diaText.text = dialogue.pop();
                     diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.gIcon.setAlpha(1);
                     help_prog = 5;
+                    drink = 2;
+                } else if (drink == 3) {
+                    pressedDia = true;
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('gambNar3D1').split("\n").reverse();
+                    diaText.text = dialogue.pop();
+                    diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.gIcon.setAlpha(1);
+                    help_prog = 5;
+                    drink = 4;
                 } else if (help_prog == 5) {
                     pressedDia = true;
                     diaBoo = true;
                     dialogue = this.cache.text.get('gambNar5').split("\n").reverse();
                     diaText.text = dialogue.pop();
                     diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.gIcon.setAlpha(1);
                 } else {
                     pressedDia = true;
                     diaBoo = true;
                     dialogue = this.cache.text.get('gambNar3').split("\n").reverse();
                     diaText.text = dialogue.pop();
                     diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.gIcon.setAlpha(1);
                     gambler_prog = 1;
                 }
             } else if (sound == this.keyBSound && gamblerChat) {
@@ -445,6 +642,8 @@ class doorScene extends Phaser.Scene {
                 }
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+                this.hButt.setAlpha(0);
+                this.gIcon.setAlpha(1);
                 amount = Math.floor((Math.random() * 6) + 1) + Math.floor((Math.random() * 6) + 1);
                 //this algorithm simulates 2 6 sided dice, looks weird but please don't touch
                 console.log(amount);
@@ -457,6 +656,8 @@ class doorScene extends Phaser.Scene {
                 dialogue = this.cache.text.get('gambChat').split("\n").reverse();
                 this.diaText.text = dialogue.pop();
                 this.diBox.setAlpha(0.5);
+                this.hButt.setAlpha(0);
+                this.gIcon.setAlpha(1);
             }
         }
     }

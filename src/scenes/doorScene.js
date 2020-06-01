@@ -225,7 +225,7 @@ class doorScene extends Phaser.Scene {
         //removes text box when screen is clicked
 
         //helper button
-        this.hButt = this.add.sprite(50, 50, 'help').setOrigin(0, 0).setInteractive();
+        this.hButt = this.add.sprite(32, 32, 'help').setOrigin(0, 0).setInteractive();
 
         this.gIcon = this.add.sprite(50, 50, 'gIcon').setOrigin(0, 0);
         this.bIcon = this.add.sprite(50, 50, 'bIcon').setOrigin(0, 0);

@@ -58,6 +58,8 @@ class doorScene extends Phaser.Scene {
         this.load.audio('eSound', "./assets/sfx/e.wav");
         this.load.audio('fSound', "./assets/sfx/f.wav");
         this.load.audio('music', "./assets/sfx/bar_music.wav")
+        this.load.audio('gunshot', "./assets/sfx/gunshot.wav")
+        this.load.audio('applause', "./assets/sfx/applause.wav")
     }
 
     create(){
@@ -113,6 +115,9 @@ class doorScene extends Phaser.Scene {
         this.keyF.on('pointerdown', () => this.playPiano(this.keyFSound,this.diaText, this.diBox) );
         this.keyA.on('pointerdown', () => this.playPiano(this.keyASound, this.diaText, this.diBox) );
         this.keyB.on('pointerdown', () => this.playPiano(this.keyBSound, this.diaText, this.diBox) );
+
+        //More sfx
+        this.gunsound = this.sound.add('gunshot')
         
         //NPCs
         this.bartender = this.physics.add.sprite(40, 364, 'bartender').setOrigin(0,0).setInteractive();
@@ -628,6 +633,7 @@ class doorScene extends Phaser.Scene {
                     bartender_prog = 2;
                 }
             } else if (sound == this.keyFSound && barChat) {
+                this.gunsound.play();
                 if (drink == 0) {
                     pressedDia = true;
                     diaBoo = true;

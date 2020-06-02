@@ -725,14 +725,11 @@ class doorScene extends Phaser.Scene {
 
     checkEven(oddButton, evenButton) {
         //player guessed even and this sees if their right
-        console.log("even checker");
-        console.log(amount);
         if (amount % 2 == 0) {
             checker = true;
         } else {
             checker = false;
         }
-        console.log(checker);
         //uses the remainder of 2 to check if even, same thing used to check for odd
         gamePlayed = true;
         oddButton.x = 2000;

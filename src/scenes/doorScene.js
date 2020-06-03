@@ -118,6 +118,7 @@ class doorScene extends Phaser.Scene {
 
         //More sfx
         this.gunsound = this.sound.add('gunshot')
+        this.applause = this.sound.add('applause')
         
         //NPCs
         this.bartender = this.physics.add.sprite(40, 364, 'bartender').setOrigin(0,0).setInteractive();
@@ -334,6 +335,8 @@ class doorScene extends Phaser.Scene {
 
         if(endScene1) {
             if(this.fArray.length != 0 && !this.settingFire) {
+                this.applause.play()
+                this.applause.setLoop(true)
                 this.settingFire = true;
                 this.clock = this.time.delayedCall(1000, () => {
                     let fire = this.fArray.pop();

@@ -197,6 +197,9 @@ class doorScene extends Phaser.Scene {
         this.diaText = this.add.text(120, 0, dialogue.pop(), this.dialogueConfig).setOrigin(0, 0);
         //the actual text object
 
+        //score display
+        this.money_display = this.add.text(950, 150, '$' + money)
+
         //For Gambling Game
         this.oddButton = this.add.image(2000, 400, 'odd').setOrigin(0.5, 0.5).setInteractive();
         this.evenButton = this.add.image(2000, 500, 'even').setOrigin(0.5, 0.5).setInteractive();
@@ -271,6 +274,7 @@ class doorScene extends Phaser.Scene {
             this.door1.x = game.config.width / 2 - this.door2.x;
             this.door2.x = game.config.width / 2 - this.door1.x;
             this.player.update();
+            this.money_display.text = '$' + money;
             //updates the door movements, and player movements
 
         } else if(gambleGame && !endScene1) {

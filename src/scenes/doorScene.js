@@ -51,6 +51,7 @@ class doorScene extends Phaser.Scene {
         this.load.text('Nar1', 'assets/text/Narrator(narrator_prog_1).txt');
         this.load.text('Nar2', 'assets/text/Narrator(narrator_prog_2).txt');
         this.load.text('Nar3G1B1', 'assets/text/Narrator(narrator_prog_3_gambler_prog_1_bartender_prog_1).txt');
+        this.load.text('NarControl', 'assets/text/Narrator(control).txt');
         this.load.text('Nar3', 'assets/text/Narrator(narrator_prog_3).txt');
         this.load.text('Nar4', 'assets/text/Narrator(narrator_prog_4).txt');
         this.load.text('Nar6', 'assets/text/Narrator(narrator_prog_6).txt');
@@ -546,6 +547,13 @@ class doorScene extends Phaser.Scene {
                 dialogue = this.cache.text.get('Nar3').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+            } else if (help_prog == 4 && hTracker >= 4) {
+                pressedDia = true;
+                diaBoo = true;
+                dialogue = this.cache.text.get('NarControl').split("\n").reverse();
+                diaText.text = dialogue.pop();
+                diBox.setAlpha(0.5);
+            }
             } else if (help_prog == 4) {
                 pressedDia = true;
                 diaBoo = true;

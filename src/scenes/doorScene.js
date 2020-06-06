@@ -615,7 +615,7 @@ class doorScene extends Phaser.Scene {
                     diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.bIcon.setAlpha(1);
-                } else if (money > 10 && money < 300) {
+                } else if (money > 10) {
                     pressedDia = true;
                     diaBoo = true;
                     dialogue = this.cache.text.get('buyMt10').split("\n").reverse();

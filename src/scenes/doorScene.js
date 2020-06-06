@@ -29,6 +29,7 @@ class doorScene extends Phaser.Scene {
         this.load.spritesheet('box', './assets/testerSquare.png', {frameWidth: 300, frameHeight: 300}); //dimensions: 96 x 132
 
         this.load.text('barChat', 'assets/text/Bartender(chat).txt');
+        this.load.text('barDrink2', 'assets/text/Bartender(drink2).txt');
         this.load.text('barNar3', 'assets/text/Bartender(narrator_prog_3).txt');
         this.load.text('beginning', 'assets/text/beginning.txt');
         this.load.text('buyMlt10', 'assets/text/Buy(money_less_than_10).txt');
@@ -52,6 +53,7 @@ class doorScene extends Phaser.Scene {
         this.load.text('Nar3G1B1', 'assets/text/Narrator(narrator_prog_3_gambler_prog_1_bartender_prog_1).txt');
         this.load.text('Nar3', 'assets/text/Narrator(narrator_prog_3).txt');
         this.load.text('Nar4', 'assets/text/Narrator(narrator_prog_4).txt')
+        this.load.text('Nar6', 'assets/text/Narrator(narrator_prog_6).txt')
 
         this.load.audio('aSound', "./assets/sfx/a.wav");
         this.load.audio('bSound', "./assets/sfx/b.wav");
@@ -553,6 +555,11 @@ class doorScene extends Phaser.Scene {
                 dialogue = this.cache.text.get('Nar4').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+            } else if (help_prog == 6) {
+                pressedDia = true;
+                diaBoo = true;
+                dialogue = this.cache.text.get('Nar6').split("\n").reverse();
+                diaText.text = dialogue.pop();
             }
         } 
     }
@@ -587,15 +594,25 @@ class doorScene extends Phaser.Scene {
                 help_prog = 3;
             }
             if(sound == this.keyASound && barChat) {
-                pressedDia = true;
-                diaBoo = true;
-                dialogue = this.cache.text.get('barNar3').split("\n").reverse();
-                diaText.text = dialogue.pop();
-                diBox.setAlpha(0.5);
-                this.hButt.setAlpha(0);
-                this.bIcon.setAlpha(1);
-                if(bartender_prog < 1) {
-                    bartender_prog = 1;
+                if (drink < 2) {
+                    pressedDia = true;
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('barNar3').split("\n").reverse();
+                    diaText.text = dialogue.pop();
+                    diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.bIcon.setAlpha(1);
+                    if(bartender_prog < 1) {
+                        bartender_prog = 1;
+                    }
+                } else {
+                    pressedDia = true;
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('barDrink2').split("\n").reverse();
+                    diaText.text = dialogue.pop();
+                    diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.bIcon.setAlpha(1);
                 }
             } else if (sound == this.keyBSound && barChat) {
                 if (money > 300 && drink >= 2) {
@@ -608,6 +625,9 @@ class doorScene extends Phaser.Scene {
                     this.bIcon.setAlpha(1);
                     if (drink < 3) {
                         drink = 3;
+                        if(help_prog < 6) {
+                            help_prog = 6
+                        }
                     }
                 } else if (money < 10) {
                     pressedDia = true;

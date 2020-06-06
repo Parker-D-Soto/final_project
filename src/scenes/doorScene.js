@@ -553,7 +553,6 @@ class doorScene extends Phaser.Scene {
                 dialogue = this.cache.text.get('NarControl').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
-            }
             } else if (help_prog == 4) {
                 pressedDia = true;
                 diaBoo = true;
@@ -725,7 +724,6 @@ class doorScene extends Phaser.Scene {
                     diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.gIcon.setAlpha(1);
-                }
                 } else if (help_prog == 5) {
                     pressedDia = true;
                     diaBoo = true;

@@ -40,6 +40,8 @@ class doorScene extends Phaser.Scene {
         this.load.text('gambNar3', 'assets/text/Gambler(narrator_prog_3).txt');
         this.load.text('gambNar3D1', 'assets/text/Gambler(narrator_prog_4_drink_1).txt');
         this.load.text('gambNar5', 'assets/text/Gambler(narrator_prog_5).txt');
+        this.load.text('gambD3', 'assets/text/Gambler(drink3).txt');
+        this.load.text('gambD4', 'assets/text/Gambler(drink4).txt');
         this.load.text('gamNar5', 'assets/text/Gambling(narrator_prog_5).txt');
         this.load.text('gamNarLt5', 'assets/text/Gambling(narrator_prog_less_than_5).txt');
         this.load.text('gamPlayL', 'assets/text/Gambling(player_loss).txt');
@@ -675,13 +677,21 @@ class doorScene extends Phaser.Scene {
                 } else if (drink == 3) {
                     pressedDia = true;
                     diaBoo = true;
-                    dialogue = this.cache.text.get('gambNar3D1').split("\n").reverse();
+                    dialogue = this.cache.text.get('gambD3').split("\n").reverse();
                     diaText.text = dialogue.pop();
                     diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.gIcon.setAlpha(1);
-                    help_prog = 5;
                     drink = 4;
+                } else if (drink == 4) {
+                    pressedDia = true;
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('gambD4').split("\n").reverse();
+                    diaText.text = dialogue.pop();
+                    diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.gIcon.setAlpha(1);
+                }
                 } else if (help_prog == 5) {
                     pressedDia = true;
                     diaBoo = true;

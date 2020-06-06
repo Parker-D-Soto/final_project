@@ -1,2 +1,5 @@
+The Performance
+A Game by Eli, Vicente and Parker
+progress the dialogue to continue
 N. Reiter: Move by pressing the w, s, a, and d keys, and the arrow keys. Open the door to continue.
 N. Reiter: If you need assistance at any time just click on me in the top left hand corner.

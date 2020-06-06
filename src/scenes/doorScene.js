@@ -52,8 +52,8 @@ class doorScene extends Phaser.Scene {
         this.load.text('Nar2', 'assets/text/Narrator(narrator_prog_2).txt');
         this.load.text('Nar3G1B1', 'assets/text/Narrator(narrator_prog_3_gambler_prog_1_bartender_prog_1).txt');
         this.load.text('Nar3', 'assets/text/Narrator(narrator_prog_3).txt');
-        this.load.text('Nar4', 'assets/text/Narrator(narrator_prog_4).txt')
-        this.load.text('Nar6', 'assets/text/Narrator(narrator_prog_6).txt')
+        this.load.text('Nar4', 'assets/text/Narrator(narrator_prog_4).txt');
+        this.load.text('Nar6', 'assets/text/Narrator(narrator_prog_6).txt');
 
         this.load.audio('aSound', "./assets/sfx/a.wav");
         this.load.audio('bSound', "./assets/sfx/b.wav");
@@ -61,9 +61,9 @@ class doorScene extends Phaser.Scene {
         this.load.audio('dSound', "./assets/sfx/d.wav");
         this.load.audio('eSound', "./assets/sfx/e.wav");
         this.load.audio('fSound', "./assets/sfx/f.wav");
-        this.load.audio('music', "./assets/sfx/bar_music.wav")
-        this.load.audio('gunshot', "./assets/sfx/gunshot.wav")
-        this.load.audio('applause', "./assets/sfx/applause.wav")
+        this.load.audio('music', "./assets/sfx/bar_music.wav");
+        this.load.audio('gunshot', "./assets/sfx/gunshot.wav");
+        this.load.audio('applause', "./assets/sfx/applause.wav");
     }
 
     create(){
@@ -334,11 +334,13 @@ class doorScene extends Phaser.Scene {
 
         if(this.door1.x < 0 && help_prog < 2 && !endScene1) {
             help_prog = 2;
+            hTracker = 0;
             this.music.play();
         } // triggers progress through the story
 
         if(bartender_prog == 2 && gambler_prog == 2 && help_prog < 4) {
             help_prog = 4;
+            hTracker = 0;
         }
 
         if(endScene1) {
@@ -519,6 +521,7 @@ class doorScene extends Phaser.Scene {
 
     askHelp(diaText, diBox) {
         if(!diaBoo && !gambleGame && !endScene1) {
+            hTracker += 1;
             if(help_prog == 0) {
                 pressedDia = true;
                 diaBoo = true;
@@ -592,6 +595,7 @@ class doorScene extends Phaser.Scene {
             sound.play();
             if(help_prog < 3) {
                 help_prog = 3;
+                hTracker = 0;
             }
             if(sound == this.keyASound && barChat) {
                 if (drink < 2) {
@@ -626,7 +630,8 @@ class doorScene extends Phaser.Scene {
                     if (drink < 3) {
                         drink = 3;
                         if(help_prog < 6) {
-                            help_prog = 6
+                            help_prog = 6;
+                            hTracker = 0;
                         }
                     }
                 } else if (money < 10) {
@@ -693,6 +698,7 @@ class doorScene extends Phaser.Scene {
                     this.hButt.setAlpha(0);
                     this.gIcon.setAlpha(1);
                     help_prog = 5;
+                    hTracker = 0;
                     drink = 2;
                 } else if (drink == 3) {
                     pressedDia = true;

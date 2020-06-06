@@ -50,6 +50,9 @@ let gambleGame = false;
 let gamblerChat = false;
 let barChat = false;
 
+//help button tracker
+hTracker = 0;
+
 //Ending Scene
 endScene1 = false;
 

@@ -80,19 +80,24 @@ class playerSprite extends Phaser.Physics.Arcade.Sprite {
             if(keyLEFT.isDown && !keyRIGHT.isDown && !keyUP.isDown&& !keyDOWN.isDown) {
                 //This will navigate the player left, and perform the animation
                 if(!this.lAnimation) {
+                    //Plays the animation if the animation isn't already playing
                     this.lWalk.play();
                     this.lAnimation = true;
                 } else {
+                    //Sets the frame to the coordinates of arrayP in the tween
                     this.setFrame(this.lArray[Math.floor(this.arrayP)]);
                 }
                 this.lAnimation = true;
                 if(help_prog < 1) {
                     help_prog = 1;
                 }
+                //Progresses the helper button (players now know how to move)
                 this.lastLeft = true;
                 this.lastUp = false;
                 this.lastRight = false;
                 this.setVelocityX(-80); //this is how it moves so the collider can detect it
+
+            //For the rest of the if else statements refer back to this first one if confused
             } else if (keyRIGHT.isDown && !keyLEFT.isDown && !keyUP.isDown&& !keyDOWN.isDown) {  
                 //This will navigate the player right, and perform the animation
                 if(!this.rAnimation) {
@@ -142,6 +147,8 @@ class playerSprite extends Phaser.Physics.Arcade.Sprite {
                 if(help_prog < 1) {
                     help_prog = 1;
                 }
+
+            //Special: this means that the player shouldn't be moving
             } else { //Velocity needs to be stopped or else it'll keep moving
 
                 //Update the bools so no animation is playing
@@ -161,6 +168,7 @@ class playerSprite extends Phaser.Physics.Arcade.Sprite {
                     this.setFrame(0);
                 }
 
+                //stops the players movement
                 this.setVelocityX(0);
                 this.setVelocityY(0);
             }

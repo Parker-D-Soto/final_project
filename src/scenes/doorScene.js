@@ -875,5 +875,4 @@ class doorScene extends Phaser.Scene {
         gamblerChat = true;
         barChat = false;
     }
-
 }

@@ -18,6 +18,9 @@ class doorScene extends Phaser.Scene {
         this.load.image('door_choice', './assets/door_choices.png');
         this.load.image('gIcon', './assets/gambler_head.png');
         this.load.image('bIcon',  './assets/bartender head.png');
+        this.load.image('whiskey', './assets/whiskey.png');
+        this.load.image('fireball', './assets/fireball.png');
+
 
         //Firesprites
         this.load.image('fire',  './assets/fire.png');
@@ -38,6 +41,7 @@ class doorScene extends Phaser.Scene {
         this.load.text('buyMt300', 'assets/text/Buy(money_more_than_300).txt');
         this.load.text('fightD0', 'assets/text/Fight(drink_0).txt');
         this.load.text('fightD1', 'assets/text/Fight(drink_1).txt');
+        this.load.text('fightD2', 'assets/text/Fight(drink_2).txt');
         this.load.text('gambChat', 'assets/text/Gambler(chat).txt');
         this.load.text('gambNar3', 'assets/text/Gambler(narrator_prog_3).txt');
         this.load.text('gambNar3D1', 'assets/text/Gambler(narrator_prog_4_drink_1).txt');
@@ -56,6 +60,9 @@ class doorScene extends Phaser.Scene {
         this.load.text('Nar3', 'assets/text/Narrator(narrator_prog_3).txt');
         this.load.text('Nar4', 'assets/text/Narrator(narrator_prog_4).txt');
         this.load.text('Nar6', 'assets/text/Narrator(narrator_prog_6).txt');
+        this.load.text('Hint1', 'assets/text/Hint(narrator_prog_1).txt');
+        this.load.text('Hint2', 'assets/text/Hint(narrator_prog_3_gambler&bartender_prog_1).txt');
+        this.load.text('Hint3', 'assets/text/Hint(narrator_prog_4).txt');
 
         //Audio used in the scene
         this.load.audio('aSound', "./assets/sfx/a.wav");
@@ -151,6 +158,13 @@ class doorScene extends Phaser.Scene {
         this.wall.body.immovable = true;
         this.wall.setAlpha(0)
         this.wall.setScale(16)
+
+        //bottles
+        this.whiskey = this.add.sprite(800, 420, 'whiskey').setOrigin(0,0);
+        this.fireball = this.add.sprite(830, 420, 'fireball').setOrigin(0,0);
+
+        this.whiskey.setAlpha(0);
+        this.fireball.setAlpha(0);
 
         //Fire Images
         this.f1 = this.add.image(120, 270, 'fire').setOrigin(0, 0);
@@ -363,7 +377,8 @@ class doorScene extends Phaser.Scene {
             hTracker = 0;
         }
 
-        if(endScene1) {
+        if(endScene1 && !diaBoo) {
+            this.hButt.setAlpha(0);
             if(this.fArray.length != 0 && !this.settingFire) {
                 this.applause.play()
                 this.applause.setLoop(true)
@@ -548,6 +563,12 @@ class doorScene extends Phaser.Scene {
                 dialogue = this.cache.text.get('Nar0').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+            } else if (help_prog == 1 && hTracker >= 3) {
+                pressedDia = true;
+                diaBoo = true;
+                dialogue = this.cache.text.get('Hint1').split("\n").reverse();
+                diaText.text = dialogue.pop();
+                diBox.setAlpha(0.5);
             } else if (help_prog == 1) {
                 pressedDia = true;
                 diaBoo = true;
@@ -572,10 +593,22 @@ class doorScene extends Phaser.Scene {
                 dialogue = this.cache.text.get('NarControl').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+            } else if (help_prog == 4 && hTracker >= 4) {
+                pressedDia = true;
+                diaBoo = true;
+                dialogue = this.cache.text.get('Hint2').split("\n").reverse();
+                diaText.text = dialogue.pop();
+                diBox.setAlpha(0.5);
             } else if (help_prog == 4) {
                 pressedDia = true;
                 diaBoo = true;
                 dialogue = this.cache.text.get('Nar3G1B1').split("\n").reverse();
+                diaText.text = dialogue.pop();
+                diBox.setAlpha(0.5);
+            } else if (help_prog == 5 && hTracker >= 4) {
+                pressedDia = true;
+                diaBoo = true;
+                dialogue = this.cache.text.get('Hint3').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
             } else if (help_prog == 5) {
@@ -655,10 +688,6 @@ class doorScene extends Phaser.Scene {
                     this.bIcon.setAlpha(1);
                     if (drink < 3) {
                         drink = 3;
-                        if(help_prog < 6) {
-                            help_prog = 6;
-                            hTracker = 0;
-                        }
                     }
                 } else if (money < 10) {
                     pressedDia = true;
@@ -702,7 +731,8 @@ class doorScene extends Phaser.Scene {
                     this.diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.bIcon.setAlpha(1);
-                } else if (drink == 2) {
+                } else if (drink == 2 || drink == 3) {
+                    this.whiskey.setAlpha(0);
                     diaBoo = true;
                     dialogue = this.cache.text.get('fightD1').split("\n").reverse();
                     this.diaText.text = dialogue.pop();
@@ -710,9 +740,16 @@ class doorScene extends Phaser.Scene {
                     this.hButt.setAlpha(0);
                     this.gIcon.setAlpha(1);
                 }  else if (drink == 4) {
+                    this.whiskey.setAlpha(0);
+                    this.fireball.setAlpha(1);
                     //Trigger end game\
-                    endScene1 = true;
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('fightD2').split("\n").reverse();
+                    this.diaText.text = dialogue.pop();
+                    this.diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
+                    this.gIcon.setAlpha(1);
+                    endScene1 = true;
                 }
             } else if (sound == this.keyASound && gamblerChat) {
                 if (drink == 1) {
@@ -725,8 +762,12 @@ class doorScene extends Phaser.Scene {
                     this.gIcon.setAlpha(1);
                     help_prog = 5;
                     hTracker = 0;
+                    this.whiskey.setAlpha(1);
                     drink = 2;
                 } else if (drink == 3) {
+                    if(help_prog < 6) {
+                        help_prog = 6;
+                    }
                     pressedDia = true;
                     diaBoo = true;
                     dialogue = this.cache.text.get('gambD3').split("\n").reverse();
@@ -734,6 +775,7 @@ class doorScene extends Phaser.Scene {
                     diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.gIcon.setAlpha(1);
+                    this.fireball.setAlpha(0);
                     drink = 4;
                 } else if (drink == 4) {
                     pressedDia = true;

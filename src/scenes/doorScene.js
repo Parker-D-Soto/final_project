@@ -741,7 +741,7 @@ class doorScene extends Phaser.Scene {
                     this.gIcon.setAlpha(1);
                 }  else if (drink == 4) {
                     this.whiskey.setAlpha(0);
-                    this.fireball.setAlpha(1);
+                    this.fireball.setAlpha(0);
                     //Trigger end game\
                     diaBoo = true;
                     dialogue = this.cache.text.get('fightD2').split("\n").reverse();
@@ -775,7 +775,7 @@ class doorScene extends Phaser.Scene {
                     diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.gIcon.setAlpha(1);
-                    this.fireball.setAlpha(0);
+                    this.fireball.setAlpha(1);
                     drink = 4;
                 } else if (drink == 4) {
                     pressedDia = true;

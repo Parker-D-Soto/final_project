@@ -199,7 +199,6 @@ class doorScene extends Phaser.Scene {
         this.diBox.setAlpha(0.5)
         //makes a transparent rectangle used for the dialogue box
 
-        this.diaText = this.add.text(120, 0, dialogue.pop(), this.dialogueConfig).setOrigin(0, 0);
         //the actual text object
 
         //score display
@@ -248,12 +247,11 @@ class doorScene extends Phaser.Scene {
         this.bIcon.setAlpha(0);
 
         this.hButt.on('pointerdown', () => this.askHelp(this.diaText, this.diBox) );
-        //Press the helper button to trigger dialogue
 
-
+        //for gambling game
+            //Does function when the button is pressed
         this.oddButton.on('pointerdown', () => this.checkOdd(this.evenButton, this.oddButton) );
         this.evenButton.on('pointerdown', () => this.checkEven(this.oddButton, this.evenButton) );
-        //for gambling game
 
         //tween boo
         this.tweened = false;
@@ -280,8 +278,6 @@ class doorScene extends Phaser.Scene {
             this.door2.x = game.config.width / 2 - this.door1.x;
             this.player.update();
             this.money_display.text = '$' + money;
-            //updates the door movements, and player movements
-
         } else if(gambleGame && !endScene1) {
             if(gamePlayed) { //checks first to see if the game's completed
                 if(checker) {

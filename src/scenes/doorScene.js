@@ -197,6 +197,9 @@ class doorScene extends Phaser.Scene {
 
         //player prefab
         this.player = new playerSprite(this, game.config.width / 3, 400, 'player').setOrigin(0.5, 0.5);
+
+        //score display
+        this.money_display = this.add.text(950, 150, '$' + money)
         
         //Dialogue Text Configuration
         this.dialogueConfig = { 
@@ -228,9 +231,6 @@ class doorScene extends Phaser.Scene {
 
         //the actual text object
         this.diaText = this.add.text(120, 0, dialogue.pop(), this.dialogueConfig).setOrigin(0, 0);
-
-        //score display
-        this.money_display = this.add.text(950, 150, '$' + money)
 
         //For Gambling Game
             //An odd and even choice button

@@ -4,6 +4,7 @@ class doorScene extends Phaser.Scene {
     }
 
     preload(){
+        //Loading images
         this.load.image('door1', './assets/door1.png'); //dimensions: 512 x 576
         this.load.image('door2', './assets/door2.png'); //dimensions: 512 x 576
         this.load.image('saloonTheater', './assets/saloon theater.png'); //dimensions: 1024 x 576
@@ -21,13 +22,13 @@ class doorScene extends Phaser.Scene {
         //Firesprites
         this.load.image('fire',  './assets/fire.png');
 
-        //load spritesheets
         this.load.spritesheet('player', './assets/player.png', {frameWidth: 60, frameHeight: 104, startFrame: 0, endFrame: 13}); //dimensions: 60 x 104
         this.load.spritesheet('bartender', './assets/bartender.png', {frameWidth: 60, frameHeight: 140}); //dimensions: 60 x 140
         this.load.spritesheet('gambler', './assets/gambler.png', {frameWidth: 96, frameHeight: 132}); //dimensions: 96 x 132
         this.load.spritesheet('help', './assets/narrator.png', {frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('box', './assets/testerSquare.png', {frameWidth: 300, frameHeight: 300}); //dimensions: 96 x 132
 
+        //Text used throughout scene
         this.load.text('barChat', 'assets/text/Bartender(chat).txt');
         this.load.text('barDrink2', 'assets/text/Bartender(drink2).txt');
         this.load.text('barNar3', 'assets/text/Bartender(narrator_prog_3).txt');
@@ -56,6 +57,7 @@ class doorScene extends Phaser.Scene {
         this.load.text('Nar4', 'assets/text/Narrator(narrator_prog_4).txt');
         this.load.text('Nar6', 'assets/text/Narrator(narrator_prog_6).txt');
 
+        //Audio used in the scene
         this.load.audio('aSound', "./assets/sfx/a.wav");
         this.load.audio('bSound', "./assets/sfx/b.wav");
         this.load.audio('cSound', "./assets/sfx/c.wav");
@@ -68,12 +70,15 @@ class doorScene extends Phaser.Scene {
     }
 
     create(){
+        //Used to have two pointers for the doors being able to drag
         this.input.addPointer(1); //needed for all the interactive objects
 
+        //Defining Arrow Keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+
         //WASD Inputs
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -86,9 +91,11 @@ class doorScene extends Phaser.Scene {
         //background
         this.saloonTheater = this.add.image(-512, -100, 'saloonTheater').setOrigin(0,0); 
         
-        //key prompts
+        //An image of choices visible to player when near the bartender
         this.bar_choice = this.add.image(50, 230, 'bar_choice').setOrigin(0,0).setScale(.1,.1)
         this.bar_choice.setAlpha(0)
+
+        //An image of choices visible to player when near the Gambler
         this.gamble_choice = this.add.image(890, 260, 'gamble_choice').setOrigin(0,0).setScale(.1,.1)
         this.gamble_choice.setAlpha(0)
         this.door_choice = this.add.image(790, 60, 'door_choice').setOrigin(0,0).setScale(.1,.1)
@@ -153,6 +160,7 @@ class doorScene extends Phaser.Scene {
         this.f5 = this.add.image(435, 120, 'fire').setOrigin(0, 0);
         this.f6 = this.add.image(750, 120, 'fire').setOrigin(0, 0);
 
+        //Making the Fire Images initially invisible till end animation
         this.f1.setAlpha(0);
         this.f2.setAlpha(0);
         this.f3.setAlpha(0);
@@ -160,13 +168,18 @@ class doorScene extends Phaser.Scene {
         this.f5.setAlpha(0);
         this.f6.setAlpha(0);
 
+        //Setting an array of fire images to reveal 1 by 1 in end animation
         this.fArray = [this.f1, this.f2, this.f3, this.f4, this.f5, this.f6];
 
+        //Once triggered the beginning of end animation will begin
         this.settingFire = false;
 
-        //doors
+        //doors, are able to be dragged by the player when clicked
         this.door1 = this.add.image(0, 0, 'door1').setOrigin(0,0).setInteractive({ draggable: true });
         this.door2 = this.add.image(game.config.width / 2, 0, 'door2').setOrigin(0,0).setInteractive({ draggable: true });
+
+        //Player Directional Walking Animation Configurations (Will use in the prefab)
+        //Order of Animations = Right, Left, Up, Down
 
         //player prefab
         this.player = new playerSprite(this, game.config.width / 3, 400, 'player').setOrigin(0.5, 0.5);
@@ -195,16 +208,21 @@ class doorScene extends Phaser.Scene {
             },
         };
 
+        //makes a transparent rectangle used for the dialogue box
         this.diBox = this.add.rectangle(0, 0, game.config.width, game.config.height / 4, 0x000000).setOrigin(0, 0);
         this.diBox.setAlpha(0.5)
-        //makes a transparent rectangle used for the dialogue box
 
         //the actual text object
+        this.diaText = this.add.text(120, 0, dialogue.pop(), this.dialogueConfig).setOrigin(0, 0);
 
         //score display
         this.money_display = this.add.text(950, 150, '$' + money)
 
         //For Gambling Game
+            //An odd and even choice button
+            //A checker global variable to see if the player chose correctly
+            //A global variable to see if the game is currently being played
+            //A global variable to track the amount rolled by the gambler
         this.oddButton = this.add.image(2000, 400, 'odd').setOrigin(0.5, 0.5).setInteractive();
         this.evenButton = this.add.image(2000, 500, 'even').setOrigin(0.5, 0.5).setInteractive();
         checker = false;
@@ -218,7 +236,7 @@ class doorScene extends Phaser.Scene {
         this.physics.add.collider(this.player, this.table, this.updateGambler);
         this.physics.add.collider(this.player, this.wall); 
 
-        //Door interactions
+        //Right Door interactions
         this.door1.on('drag', function (pointer, dragX, dragY) {
 
             if(dragX <= 0) {
@@ -226,6 +244,7 @@ class doorScene extends Phaser.Scene {
             }
         });
 
+        //Left Door interactions
         this.door2.on('drag', function (pointer, dragX, dragY) {
 
             if(dragX >= game.config.width / 2) {
@@ -234,18 +253,21 @@ class doorScene extends Phaser.Scene {
     
         });
 
-        this.input.on('pointerdown', () => this.updateDia(this.diaText, this.diBox) );
         //removes text box when screen is clicked
+        this.input.on('pointerdown', () => this.updateDia(this.diaText, this.diBox) );
 
         //helper button
         this.hButt = this.add.sprite(32, 32, 'help').setOrigin(0, 0).setInteractive();
 
+        //Icons that will display who is currently talking
         this.gIcon = this.add.sprite(50, 50, 'gIcon').setOrigin(0, 0);
         this.bIcon = this.add.sprite(50, 50, 'bIcon').setOrigin(0, 0);
 
+        //These Icons are initially invisible
         this.gIcon.setAlpha(0);
         this.bIcon.setAlpha(0);
-
+        
+        //Press the helper button to trigger dialogue
         this.hButt.on('pointerdown', () => this.askHelp(this.diaText, this.diBox) );
 
         //for gambling game
@@ -274,6 +296,7 @@ class doorScene extends Phaser.Scene {
         }
 
         if(!diaBoo && !gambleGame && !endScene1) {
+            //updates the door movements, and player movements
             this.door1.x = game.config.width / 2 - this.door2.x;
             this.door2.x = game.config.width / 2 - this.door1.x;
             this.player.update();

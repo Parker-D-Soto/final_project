@@ -77,6 +77,18 @@ class doorScene extends Phaser.Scene {
     }
 
     create(){
+        //reset global variables
+        hTracker = 0;
+        narrator_prog = 0
+        bartender_prog = 0
+        gambler_prog = 0
+        drink = 0
+        winStreek = 0;
+        amount = 0;
+        help_prog = 0;
+        money = 0;
+        endScene1 = false;
+
         //Used to have two pointers for the doors being able to drag
         this.input.addPointer(1); //needed for all the interactive objects
 

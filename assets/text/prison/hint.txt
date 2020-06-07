@@ -1,0 +1,1 @@
+To ask for help simply go to the console and type help

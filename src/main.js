@@ -8,7 +8,7 @@ let config = {
             debug: true
         }
     },
-    scene: [doorScene]
+    scene: [doorScene, prisonScene]
 };
 
 let game = new Phaser.Game(config);
@@ -49,6 +49,9 @@ let gambleGame = false;
 //chatting triggers
 let gamblerChat = false;
 let barChat = false;
+
+//help button tracker
+hTracker = 0;
 
 //Ending Scene
 endScene1 = false;

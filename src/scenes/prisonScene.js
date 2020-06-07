@@ -273,7 +273,6 @@ class prisonScene extends Phaser.Scene {
                 dialogue = this.cache.text.get('h1').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
-            }
             } else if(help_prog == 8) {
                 //Process dialogue variables
                 pressedDia = true;

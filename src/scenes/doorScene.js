@@ -550,6 +550,10 @@ class doorScene extends Phaser.Scene {
                     repeat: 0,            
                     delay: 1000
                 });
+            } else if(this.tweened) {
+                this.clock = this.time.delayedCall(10000, () => {
+                    this.scene.start("prisonScene"); 
+                }, null, this);
             }
         }
     }

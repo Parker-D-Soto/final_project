@@ -29,9 +29,13 @@ class prisonScene extends Phaser.Scene {
         this.load.text('w2', 'assets/text/prison/w2.txt');
         this.load.text('w3', 'assets/text/prison/w3.txt');
         this.load.text('w4', 'assets/text/prison/w4.txt');
+        this.load.text('h1', 'assets/text/prison/hint.txt');
     }
 
     create() {
+        //reset help tracker
+        hTracker = 0;
+
         //starting dialogue update as game goes on, dialogue is global variable
         dialogue = this.cache.text.get('n1').split("\n").reverse();
 
@@ -139,6 +143,7 @@ class prisonScene extends Phaser.Scene {
                     this.bIcon.setAlpha(1);
                     //progress the dialogue
                     help_prog = 2;
+                    hTracker = 0
                 }, null, this);
                 //Rest of else if tree refer to the above (same except for loading different dialogue)
             } else if (help_prog == 3) {
@@ -151,6 +156,7 @@ class prisonScene extends Phaser.Scene {
                     this.diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.bIcon.setAlpha(1);
+                    hTracker = 0
                     help_prog = 4;
                 }, null, this);
             } else if (help_prog == 5) {
@@ -163,6 +169,7 @@ class prisonScene extends Phaser.Scene {
                     this.diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.bIcon.setAlpha(1);
+                    hTracker = 0
                     help_prog = 6;
                 }, null, this);
             } else if (help_prog == 7) {
@@ -175,6 +182,7 @@ class prisonScene extends Phaser.Scene {
                     this.diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.bIcon.setAlpha(1);
+                    hTracker = 0
                     help_prog = 8;
                 }, null, this);
             }
@@ -183,8 +191,6 @@ class prisonScene extends Phaser.Scene {
 
     //helper function to process txt assets
     updateDia(diaText, diBox) {
-        //ensure the gambling game is not being played and the end animation isn't triggered
-        if(!gambleGame && !endScene1) {
             //A bool to help with a bug where when dialogue is loaded as something is pressed
             //The dialogue loads weird and the screen needs to be pressed twice
             if(pressedDia) {
@@ -211,11 +217,13 @@ class prisonScene extends Phaser.Scene {
                     diaText.text = diaString
                 } 
             } 
-        }
     }
 
     //Helper dialogue
     askHelp(diaText, diBox) {
+        //update tracker
+        hTracker += 1;
+
         //ensure no dialogue is being processed
         if(!diaBoo) {
             //first bit of dialgue
@@ -227,7 +235,8 @@ class prisonScene extends Phaser.Scene {
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
                 //Update dialogue progress
-                help_prog += 1;
+                hTracker = 0
+                help_prog = 1;
             } else if(help_prog == 2) {
                 //Process dialogue variables
                 pressedDia = true;
@@ -236,7 +245,8 @@ class prisonScene extends Phaser.Scene {
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
                 //update dialogue process
-                help_prog += 1;
+                hTracker = 0
+                help_prog = 3;
             } else if(help_prog == 4) {
                 //Process dialogue variables
                 pressedDia = true;
@@ -245,7 +255,8 @@ class prisonScene extends Phaser.Scene {
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
                 //update dialogue process
-                help_prog += 1;
+                hTracker = 0
+                help_prog = 5;
             } else if(help_prog == 6) {
                 //Process dialoge variables
                 pressedDia = true;
@@ -254,7 +265,15 @@ class prisonScene extends Phaser.Scene {
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
                 //Update dialogue process
-                help_prog += 1;
+                hTracker = 0
+                help_prog = 7;
+            } else if(help_prog == 8 && hTracker > 3) {
+                pressedDia = true;
+                diaBoo = true;
+                dialogue = this.cache.text.get('h1').split("\n").reverse();
+                diaText.text = dialogue.pop();
+                diBox.setAlpha(0.5);
+            }
             } else if(help_prog == 8) {
                 //Process dialogue variables
                 pressedDia = true;

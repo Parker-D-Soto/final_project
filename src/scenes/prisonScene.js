@@ -25,7 +25,10 @@ class prisonScene extends Phaser.Scene {
         this.load.text('n4', 'assets/text/prison/n4.txt');
         this.load.text('n5', 'assets/text/prison/n5.txt');
         this.load.text('n6', 'assets/text/prison/n6.txt');
-        this.load.text('w1', 'assets/text/prison/warden.txt');
+        this.load.text('w1', 'assets/text/prison/w1.txt');
+        this.load.text('w2', 'assets/text/prison/w2.txt');
+        this.load.text('w3', 'assets/text/prison/w3.txt');
+        this.load.text('w4', 'assets/text/prison/w4.txt');
     }
 
     create() {
@@ -111,29 +114,68 @@ class prisonScene extends Phaser.Scene {
             //updates player
             this.player.update();
 
-            if(help_prog == 2) {
+            //When the player talks to the helper
+            //the warden will appear
+            if(help_prog == 1) { 
+                //Player has talked to helper trigger warden dialogue
+                help_prog = -1;
+                //This is to make sure the player can't talk to the helper as the
+                //warden appears
+                this.clock = this.time.delayedCall(2000, () => {
+                    //After 2 seconds the warden appears
+                    this.warden.setAlpha(1);
+
+                    //trigger dilogue booleans
+                    diaBoo = true;
+                    //cache wanted dialogue
+                    dialogue = this.cache.text.get('w1').split("\n").reverse();
+                    //pop the first line of dialogue
+                    this.diaText.text = dialogue.pop();
+                    //trigger dialogue box
+                    this.diBox.setAlpha(0.5);
+                    //get rid of helper button
+                    this.hButt.setAlpha(0);
+                    //trigger warden Icon (same as bartender (same character))
+                    this.bIcon.setAlpha(1);
+                    //progress the dialogue
+                    help_prog = 2;
+                }, null, this);
+                //Rest of else if tree refer to the above (same except for loading different dialogue)
+            } else if (help_prog == 3) {
+                help_prog = -1;
                 this.clock = this.time.delayedCall(2000, () => {
                     this.warden.setAlpha(1);
-                    pressedDia = true;
                     diaBoo = true;
-                    dialogue = this.cache.text.get('w1').split("\n").reverse();
+                    dialogue = this.cache.text.get('w2').split("\n").reverse();
                     this.diaText.text = dialogue.pop();
                     this.diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.bIcon.setAlpha(1);
-                    help_prog += 1;
+                    help_prog = 4;
                 }, null, this);
             } else if (help_prog == 5) {
+                help_prog = -1;
                 this.clock = this.time.delayedCall(2000, () => {
                     this.warden.setAlpha(1);
-                    pressedDia = true;
                     diaBoo = true;
-                    dialogue = this.cache.text.get('w1').split("\n").reverse();
+                    dialogue = this.cache.text.get('w3').split("\n").reverse();
                     this.diaText.text = dialogue.pop();
                     this.diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.bIcon.setAlpha(1);
-                    help_prog += 1;
+                    help_prog = 6;
+                }, null, this);
+            } else if (help_prog == 7) {
+                help_prog = -1;
+                this.clock = this.time.delayedCall(2000, () => {
+                    this.warden.setAlpha(1);
+                    diaBoo = true;
+                    dialogue = this.cache.text.get('w4').split("\n").reverse();
+                    this.diaText.text = dialogue.pop();
+                    this.diBox.setAlpha(0.5);
+                    this.hButt.setAlpha(0);
+                    this.bIcon.setAlpha(1);
+                    help_prog = 8;
                 }, null, this);
             }
         }
@@ -141,18 +183,29 @@ class prisonScene extends Phaser.Scene {
 
     //helper function to process txt assets
     updateDia(diaText, diBox) {
+        //ensure the gambling game is not being played and the end animation isn't triggered
         if(!gambleGame && !endScene1) {
+            //A bool to help with a bug where when dialogue is loaded as something is pressed
+            //The dialogue loads weird and the screen needs to be pressed twice
             if(pressedDia) {
                 pressedDia = false;
             } else {
+                //If dialogue is out of lines return to normal
                 if(dialogue.length == 0) {
+                    //ensure warden is gone
                     this.warden.setAlpha(0);
+                    //get rid of the box
                     diBox.setAlpha(0);
+                    //return helper button
                     this.hButt.setAlpha(1);
+                    //get rid of any icons
                     this.bIcon.setAlpha(0);
+                    //set boolean checking if dialogue is being processed to false
                     diaBoo = false;
+                    //set the text to empty
                     diaText.text = "";
                 } else {
+                    //Otherwise pop the next part of the dialogue (the next line)
                     diaBoo = true;
                     var diaString = dialogue.pop();
                     diaText.text = diaString
@@ -161,43 +214,54 @@ class prisonScene extends Phaser.Scene {
         }
     }
 
+    //Helper dialogue
     askHelp(diaText, diBox) {
+        //ensure no dialogue is being processed
         if(!diaBoo) {
+            //first bit of dialgue
             if(help_prog == 0) {
+                //Process dialogue variables
                 pressedDia = true;
                 diaBoo = true;
                 dialogue = this.cache.text.get('n2').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+                //Update dialogue progress
                 help_prog += 1;
-            } else if(help_prog == 1) {
+            } else if(help_prog == 2) {
+                //Process dialogue variables
                 pressedDia = true;
                 diaBoo = true;
                 dialogue = this.cache.text.get('n3').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+                //update dialogue process
                 help_prog += 1;
-            } else if(help_prog == 3) {
+            } else if(help_prog == 4) {
+                //Process dialogue variables
                 pressedDia = true;
                 diaBoo = true;
                 dialogue = this.cache.text.get('n4').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+                //update dialogue process
                 help_prog += 1;
-            } else if(help_prog == 4) {
+            } else if(help_prog == 6) {
+                //Process dialoge variables
                 pressedDia = true;
                 diaBoo = true;
                 dialogue = this.cache.text.get('n5').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
+                //Update dialogue process
                 help_prog += 1;
-            } else if(help_prog == 6) {
+            } else if(help_prog == 8) {
+                //Process dialogue variables
                 pressedDia = true;
                 diaBoo = true;
                 dialogue = this.cache.text.get('n6').split("\n").reverse();
                 diaText.text = dialogue.pop();
                 diBox.setAlpha(0.5);
-                help_prog += 1;
             }
         } 
     }

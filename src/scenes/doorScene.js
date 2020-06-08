@@ -553,7 +553,7 @@ class doorScene extends Phaser.Scene {
                     delay: 1000
                 });
                 var tween = this.tweens.add({
-                    targets: [this.keyC],
+                    targets: [this.keyB],
                     scale: { from: 1, to: 0.5},
                     x: this.keyB.x / 2 + 256,
                     y: this.keyB.y / 2 + 50,

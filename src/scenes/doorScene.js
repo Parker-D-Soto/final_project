@@ -108,6 +108,9 @@ class doorScene extends Phaser.Scene {
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
+        //Restart Key
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
         //starting dialogue update as game goes on, dialogue is global variable
         dialogue = this.cache.text.get('beginning').split("\n").reverse();
 
@@ -326,6 +329,12 @@ class doorScene extends Phaser.Scene {
         }
 
         if(!diaBoo && !gambleGame && !endScene1) {
+            
+            //Method to restart the game
+            if(keyR.isDown) {
+                this.scene.start("doorScene"); 
+            }
+
             //updates the door movements, and player movements
             this.door1.x = game.config.width / 2 - this.door2.x;
             this.door2.x = game.config.width / 2 - this.door1.x;

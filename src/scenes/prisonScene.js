@@ -33,6 +33,9 @@ class prisonScene extends Phaser.Scene {
     }
 
     create() {
+        //console stuff
+        g = "you escape from the prison, you are caught and executed. Thanks for playing!"
+
         //reset help tracker
         hTracker = 0;
 

@@ -7,6 +7,7 @@ class prisonScene extends Phaser.Scene {
         //setting scene
         this.load.image('jail_cell', './assets/jail_cell.png');
         this.load.image('jail_hall', './assets/jail_hall.png');
+        this.load.image('door_choice', './assets/door_choices.png');
 
         //Warden
         this.load.image('warden', './assets/warden.png');
@@ -69,6 +70,9 @@ class prisonScene extends Phaser.Scene {
 
         //player prefab
         this.player = new playerSprite(this, game.config.width / 3, 400, 'player').setOrigin(0.5, 0.5);
+        
+        //door choice
+        this.door_choice = this.add.image(660, 110, 'door_choice').setOrigin(0,0).setScale(.1,.1)
 
         //Dialogue Text Configuration
         this.dialogueConfig = { 

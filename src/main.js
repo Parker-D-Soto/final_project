@@ -64,5 +64,5 @@ let help = "So you finally found ME, how can I help YOU?";
 let me = "Who am I? I am YOU, YOU are ME"
 let you = "YOU are NOTHING, YOU are EVERYTHING"
 let nothing = ""
-let everything = "01101000 01100101 01101100 01101100 01101111 00100000 01110111 01101111 01110010 01101100 01100100"
+let everything = "01000011 01100001 01101110 01110100 00100000 01111001 01101111 01110101 00100000 01110010 01100101 01100001 01100100 00111111 00100000 01110000 01110010 01100101 01110011 01110011 00100000 01100111"
 let g = "You leave the theatre, finally able to take a free step. You bound and leap through the streets you cry out 'freeeeeedom' as you toss yourself into the path of the nearest bus. You win. congrats. ur a cool dude. pround of you. this game was made by Eli Miller, Parker Soto and Vicente Hernandez."

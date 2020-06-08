@@ -31,6 +31,9 @@ class prisonScene extends Phaser.Scene {
         this.load.text('w3', 'assets/text/prison/w3.txt');
         this.load.text('w4', 'assets/text/prison/w4.txt');
         this.load.text('h1', 'assets/text/prison/hint.txt');
+        
+        //harmonica music
+        this.load.audio('music', "./assets/sfx/harmonica.wav");
     }
 
     create() {
@@ -73,6 +76,11 @@ class prisonScene extends Phaser.Scene {
         
         //door choice
         this.door_choice = this.add.image(660, 110, 'door_choice').setOrigin(0,0).setScale(.1,.1)
+        
+        //music
+        this.music = this.sound.add('music')
+        this.music.setLoop(true);
+        this.music.play()
 
         //Dialogue Text Configuration
         this.dialogueConfig = { 

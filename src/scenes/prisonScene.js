@@ -7,6 +7,7 @@ class prisonScene extends Phaser.Scene {
         //setting scene
         this.load.image('jail_cell', './assets/jail_cell.png');
         this.load.image('jail_hall', './assets/jail_hall.png');
+        this.load.image('door', './assets/door.png')
         this.load.image('door_choice', './assets/door_choices.png');
 
         //Warden
@@ -58,6 +59,7 @@ class prisonScene extends Phaser.Scene {
 
         //placing foreground
         this.jail_cell = this.add.image(0, 0, 'jail_cell').setOrigin(0,0);
+        this.cell_door = this.add.image(660, 165, 'door').setOrigin(0,0);
 
         //Defining Arrow Keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);

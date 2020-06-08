@@ -286,8 +286,8 @@ class doorScene extends Phaser.Scene {
         this.hButt = this.add.sprite(32, 32, 'help').setOrigin(0, 0).setInteractive();
 
         //Icons that will display who is currently talking
-        this.gIcon = this.add.sprite(50, 50, 'gIcon').setOrigin(0, 0);
-        this.bIcon = this.add.sprite(50, 50, 'bIcon').setOrigin(0, 0);
+        this.gIcon = this.add.sprite(32, 32, 'gIcon').setOrigin(0, 0);
+        this.bIcon = this.add.sprite(32, 32, 'bIcon').setOrigin(0, 0);
 
         //These Icons are initially invisible
         this.gIcon.setAlpha(0);

@@ -88,6 +88,10 @@ class doorScene extends Phaser.Scene {
         help_prog = 0;
         money = 0;
         endScene1 = false;
+        g = "You leave the theatre, finally able to take a free step. You bound and leap through the streets you cry out 'freeeeeedom' as you toss yourself into the path of the nearest bus. You win. congrats. ur a cool dude. pround of you. this game was made by Eli Miller, Parker Soto and Vicente Hernandez."
+        diaBoo = true;
+        pressedDia = false;
+        gamblerPhrase = false;
 
         //Used to have two pointers for the doors being able to drag
         this.input.addPointer(1); //needed for all the interactive objects

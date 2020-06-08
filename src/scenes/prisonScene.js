@@ -72,6 +72,7 @@ class prisonScene extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         //player prefab
         this.player = new playerSprite(this, game.config.width / 3, 400, 'player').setOrigin(0.5, 0.5);
@@ -132,6 +133,11 @@ class prisonScene extends Phaser.Scene {
 
     update() {
         if(!diaBoo) {
+
+            //Method to restart the game
+            if(keyR.isDown) {
+                this.scene.start("doorScene"); 
+            }
 
             //When the player talks to the helper
             //the warden will appear

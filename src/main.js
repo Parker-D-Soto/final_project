@@ -14,7 +14,7 @@ let config = {
 let game = new Phaser.Game(config);
 
 //movement
-let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyW, keyA, keyS, keyD;
+let keyLEFT, keyRIGHT, keyUP, keyDOWN, keyW, keyA, keyS, keyD, keyR;
 
 //dialogue progressions
 let narrator_prog = 0

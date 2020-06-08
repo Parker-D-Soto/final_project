@@ -132,8 +132,6 @@ class prisonScene extends Phaser.Scene {
 
     update() {
         if(!diaBoo) {
-            //updates player
-            this.player.update();
 
             //When the player talks to the helper
             //the warden will appear

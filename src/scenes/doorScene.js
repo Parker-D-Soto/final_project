@@ -740,7 +740,7 @@ class doorScene extends Phaser.Scene {
                 }
             } else if (sound == this.keyFSound && barChat) {
                 this.gunsound.play();
-                if (drink == 0) {
+                if (drink < 2) {
                     pressedDia = true;
                     diaBoo = true;
                     dialogue = this.cache.text.get('fightD0').split("\n").reverse();

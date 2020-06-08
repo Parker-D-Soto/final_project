@@ -644,7 +644,7 @@ class doorScene extends Phaser.Scene {
     //Function for triggering dialogue via the helper button using progression numbers 
 
     updateDia(diaText, diBox) {
-        if(!gambleGame && !endScene1) {
+        if(!gambleGame) {
             if(pressedDia) {
                 pressedDia = false;
             } else {
@@ -702,6 +702,7 @@ class doorScene extends Phaser.Scene {
                     diBox.setAlpha(0.5);
                     this.hButt.setAlpha(0);
                     this.bIcon.setAlpha(1);
+                    money -= 300;
                     if (drink < 3) {
                         drink = 3;
                     }
@@ -749,6 +750,7 @@ class doorScene extends Phaser.Scene {
                     this.bIcon.setAlpha(1);
                 } else if (drink == 2 || drink == 3) {
                     this.whiskey.setAlpha(0);
+                    pressedDia = true;
                     diaBoo = true;
                     dialogue = this.cache.text.get('fightD1').split("\n").reverse();
                     this.diaText.text = dialogue.pop();
@@ -759,6 +761,7 @@ class doorScene extends Phaser.Scene {
                     this.whiskey.setAlpha(0);
                     this.fireball.setAlpha(0);
                     //Trigger end game\
+                    pressedDia = true;
                     diaBoo = true;
                     dialogue = this.cache.text.get('fightD2').split("\n").reverse();
                     this.diaText.text = dialogue.pop();

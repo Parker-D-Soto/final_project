@@ -569,6 +569,8 @@ class doorScene extends Phaser.Scene {
             } else if(this.tweened) {
                 this.clock = this.time.delayedCall(10000, () => {
                     this.scene.start("prisonScene"); 
+                    this.applause.stop()
+                    this.music.stop()
                 }, null, this);
             }
         }

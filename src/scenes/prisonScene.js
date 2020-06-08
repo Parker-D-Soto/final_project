@@ -33,6 +33,7 @@ class prisonScene extends Phaser.Scene {
     }
 
     create() {
+
         //reset help tracker
         hTracker = 0;
 

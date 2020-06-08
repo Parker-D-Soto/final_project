@@ -122,7 +122,7 @@ class prisonScene extends Phaser.Scene {
         this.hButt = this.add.sprite(32, 32, 'help').setOrigin(0, 0).setInteractive();
 
         //Icons that will display who is currently talking
-        this.bIcon = this.add.sprite(50, 50, 'bIcon').setOrigin(0, 0);
+        this.bIcon = this.add.sprite(32, 32, 'bIcon').setOrigin(0, 0);
         this.bIcon.setAlpha(0);
 
         //Press the helper button to trigger dialogue
